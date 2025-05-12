@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Info, Copy } from 'lucide-react';
 import QRCode from 'qrcode.react';
-import { supabase } from '../supabaseClient'; // Import the Supabase client
+import { supabase } from '../supabaseClient';
 
 const TokenForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const TokenForm: React.FC = () => {
     paymentConfirmed: false,
   });
 
-  const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX'; // Replace with your actual payment address
+  const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -44,38 +44,32 @@ const TokenForm: React.FC = () => {
       return;
     }
 
-    // Get the current authenticated user (optional for anonymous submission)
-    // We still get the user data here, but we won't block submission if user is null
     const { data: { user } } = await supabase.auth.getUser();
 
-    // Prepare data for Supabase
     const { tokenName, tokenSymbol, totalSupply, tokenLogoUrl, walletAddress } = formData;
 
-    // Insert data into Supabase using the correct table name 'requests'
     const { data, error } = await supabase
-      .from('requests') // Use the correct table name 'requests'
+      .from('requests')
       .insert([
         {
-          // Include user_id if user is logged in, otherwise it will be null
           user_id: user ? user.id : null,
-          token_type: 'MEMEX', // Assuming a fixed token type for now
-          amount: parseInt(totalSupply, 10), // Use amount for total_supply
-          token_name: tokenName, // Add token_name
-          token_symbol: tokenSymbol, // Add token_symbol
-          token_logo_url: tokenLogoUrl, // Add token_logo_url
-          wallet_address: walletAddress, // Add wallet_address
-          payment_confirmed: formData.paymentConfirmed, // Save payment confirmation status
-          status: 'pending' // Default status
+          token_type: 'MEMEX',
+          amount: parseInt(totalSupply, 10),
+          token_name: tokenName,
+          token_symbol: tokenSymbol,
+          token_logo_url: tokenLogoUrl,
+          wallet_address: walletAddress,
+          payment_confirmed: formData.paymentConfirmed,
+          status: 'pending'
         },
       ]);
 
     if (error) {
       console.error('Error saving token request:', error);
-      alert(`Failed to submit token request: ${error.message}`); // Show specific error message
+      alert(`Failed to submit token request: ${error.message}`);
     } else {
       console.log('Token request submitted successfully:', data);
       alert('Token creation request submitted successfully!');
-      // Optionally reset form here
       setFormData({
         tokenName: '',
         tokenSymbol: '',
@@ -90,17 +84,15 @@ const TokenForm: React.FC = () => {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Token Details</h3>
-      {/* Download Wallet Button */}
       <div className="mb-6 text-center">
         <a
-          href="#" // Replace with actual wallet download link
+          href="#"
           className="inline-flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out w-full"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
           Download OmniXEP Wallet
         </a>
       </div>
-
 
       <div className="flex items-center bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
         <Info className="mr-3" size={20} />
@@ -120,9 +112,9 @@ const TokenForm: React.FC = () => {
             value={formData.tokenName}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required // Line 87
-            placeholder="Please fill in this field"
-            title="Please fill in this field"
+            required
+            placeholder="Enter token name"
+            title="Please enter a token name"
           />
         </div>
 
@@ -135,9 +127,9 @@ const TokenForm: React.FC = () => {
             value={formData.tokenSymbol}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required // Line 99
-            placeholder="Please fill in this field"
-            title="Please fill in this field"
+            required
+            placeholder="Enter token symbol"
+            title="Please enter a token symbol"
           />
         </div>
 
@@ -150,29 +142,24 @@ const TokenForm: React.FC = () => {
             value={formData.totalSupply}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required // Line 111
-            placeholder="Please fill in this field"
-            title="Please fill in this field"
+            required
+            placeholder="Enter total supply"
+            title="Please enter the total supply"
           />
         </div>
 
-        {/* New field for Token Logo URL */}
         <div className="mb-4">
           <label htmlFor="tokenLogoUrl" className="block text-gray-700 font-semibold mb-2">Token Logo (PNG URL)</label>
           <input
-            type="url" // Use type="url" for URL input
+            type="url"
             id="tokenLogoUrl"
             name="tokenLogoUrl"
             value={formData.tokenLogoUrl}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            // Make this field optional or required based on your needs
-            // required
-            placeholder="Please fill in this field"
+            placeholder="Enter logo URL (optional)"
           />
         </div>
-        {/* End new field */}
-
 
         <div className="mb-6">
           <label htmlFor="walletAddress" className="block text-gray-700 font-semibold mb-2">Your Electra Protocol Wallet Address (for receiving token)</label>
@@ -183,13 +170,12 @@ const TokenForm: React.FC = () => {
             value={formData.walletAddress}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required // Line 135
-            placeholder="Please fill in this field"
-            title="Please fill in this field"
+            required
+            placeholder="Enter wallet address"
+            title="Please enter your wallet address"
           />
         </div>
 
-        {/* Payment Details Section */}
         <div className="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-200">
           <h4 className="text-lg font-semibold text-gray-800 mb-3">Payment Address</h4>
           <p className="text-gray-700 mb-2 break-all">{paymentAddress}</p>
@@ -202,11 +188,9 @@ const TokenForm: React.FC = () => {
           </button>
 
           <div className="mt-4 flex justify-center">
-             {/* QR Code */}
             <QRCode value={paymentAddress} size={180} level="H" />
           </div>
 
-          {/* Payment Confirmation Checkbox */}
           <div className="mt-6">
             <label className="flex items-center">
               <input
@@ -223,7 +207,6 @@ const TokenForm: React.FC = () => {
             </label>
           </div>
         </div>
-        {/* End Payment Details Section */}
 
         <button
           type="submit"

@@ -10,7 +10,6 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
   return (
     <footer className="bg-gray-800 text-gray-300 py-12 px-6">
       <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Column 1: Logo/Brand */}
         <div>
           <h3 className="text-xl font-bold text-white mb-4">MemeX</h3>
           <p className="text-sm">
@@ -18,7 +17,6 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           </p>
         </div>
 
-        {/* Column 2: Quick Links */}
         <div>
           <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
           <ul>
@@ -34,7 +32,6 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           </ul>
         </div>
 
-        {/* Column 3: Legal */}
         <div>
           <h4 className="text-lg font-semibold text-white mb-4">Legal</h4>
           <ul>
@@ -47,7 +44,6 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
           </ul>
         </div>
 
-        {/* Column 4: Contact & Download */}
         <div>
           <h4 className="text-lg font-semibold text-white mb-4">Connect</h4>
           <div className="flex space-x-4 mb-6">
@@ -56,12 +52,11 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
             <a href="#" className="hover:text-white transition duration-200"><Linkedin size={24} /></a>
             <a href="#" className="hover:text-white transition duration-200"><Instagram size={24} /></a>
           </div>
-          {/* Wallet Download Button */}
           <a
-            href="#" // Replace with actual wallet download link
+            href="#"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out"
           >
-            Download OmniXEP Wallet {/* Metin buraya güncellendi */}
+            Download OmniXEP Wallet
           </a>
         </div>
       </div>
