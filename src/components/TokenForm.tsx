@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Info, Copy } from 'lucide-react';
 import QRCode from 'qrcode.react';
 import { supabase } from '../supabaseClient';
+import { detectDevice, walletUrls } from '../utils/deviceDetection';
 
 const TokenForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -81,12 +82,17 @@ const TokenForm: React.FC = () => {
     }
   };
 
+  const deviceType = detectDevice();
+  const walletDownloadUrl = walletUrls[deviceType];
+
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Token Details</h3>
       <div className="mb-6 text-center">
         <a
-          href="#"
+          href={walletDownloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out w-full"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { detectDevice, walletUrls } from '../utils/deviceDetection';
 
 interface FooterProps {
   onPrivacyClick: () => void;
@@ -7,6 +8,9 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
+  const deviceType = detectDevice();
+  const walletDownloadUrl = walletUrls[deviceType];
+
   return (
     <footer className="bg-gray-800 text-gray-300 py-12 px-6">
       <div className="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -53,7 +57,9 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
             <a href="#" className="hover:text-white transition duration-200"><Instagram size={24} /></a>
           </div>
           <a
-            href="#"
+            href={walletDownloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out"
           >
             Download OmniXEP Wallet
