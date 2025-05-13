@@ -47,7 +47,7 @@ const FAQ: React.FC = () => {
     },
     {
       question: "What is the fee for creating a token?",
-      answer: "The fee for token creation is 20,000,000 MEMEX, which is one of the lowest in the market for custom token creation."
+      answer: "The fee for token creation is 10,000,000 MEMEX, which is one of the lowest in the market for custom token creation."
     },
     {
       question: "Do I need technical knowledge to create a token?",
