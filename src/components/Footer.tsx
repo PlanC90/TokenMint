@@ -32,6 +32,9 @@ const Footer: React.FC<FooterProps> = ({ onPrivacyClick, onTermsClick }) => {
             <li className="mb-2">
               <a href="#faq" className="hover:text-white transition duration-200">FAQ</a>
             </li>
+            <li className="mb-2">
+              <a href="/admin" className="hover:text-white transition duration-200">Personnel</a>
+            </li>
           </ul>
         </div>
 
