@@ -34,6 +34,8 @@ const AdminDashboard: React.FC = () => {
   }, [navigate]);
 
   const fetchRequests = async () => {
+    console.log('Fetching token requests...'); // Add this line
+
     const { data, error } = await supabase
       .from('token_requests')
       .select('*')
@@ -44,9 +46,13 @@ const AdminDashboard: React.FC = () => {
       return;
     }
 
+    console.log('Token requests data:', data); // Add this line
+
     if (data) {
       setRequests(data);
       calculateStats(data);
+    } else {
+      console.warn('No data received from token_requests table.');
     }
   };
 
