@@ -14,7 +14,7 @@ const TokenForm: React.FC = () => {
     paymentConfirmed: false,
   });
 
-  const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX';
+  const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX'; // This should be the actual payment address
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -54,7 +54,7 @@ const TokenForm: React.FC = () => {
       .insert([
         {
           user_id: user ? user.id : null,
-          token_type: 'MEMEX',
+          token_type: 'MEMEX', // Assuming MEMEX is the payment token type
           amount: parseInt(totalSupply, 10),
           token_name: tokenName,
           token_symbol: tokenSymbol,
@@ -95,7 +95,7 @@ const TokenForm: React.FC = () => {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out w-full"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-download mr-2"><path d="M21 15v4a2 20 0 0 1-2 2H5a2 20 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
           Download OmniXEP Wallet
         </a>
       </div>
@@ -103,7 +103,7 @@ const TokenForm: React.FC = () => {
       <div className="flex items-center bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
         <Info className="mr-3" size={20} />
         <div>
-          <p className="font-bold">Token creation fee: 5,000,000 MEMEX</p>
+          <p className="font-bold">Token creation fee: 5,000,000 MemeX</p>
           <p className="text-sm">Your token will be delivered to your wallet within 48 hours.</p>
         </div>
       </div>

@@ -8,10 +8,10 @@ const Hero: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 mb-10 md:mb-0">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-6">
-              Create Your Own <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Token</span> on MemeX
+              Create Your Own <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Token</span> on Electra Protocol
             </h1>
             <p className="text-lg text-gray-700 mb-8">
-              Launch your custom token on the MemeX blockchain with the lowest fees. Get your token delivered within 48 hours.
+              Launch your custom token on the Electra Protocol blockchain with the lowest fees. Get your token delivered within 48 hours.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <a
@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
                   <Coins className="text-blue-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">5,000,000 MEMEX</h3>
+                  <h3 className="font-bold text-lg">5,000,000 MemeX</h3>
                   <p className="text-gray-500 text-sm">Token Creation Fee</p>
                 </div>
               </div>
