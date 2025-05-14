@@ -103,7 +103,7 @@ const TokenForm: React.FC = () => {
       <div className="flex items-center bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
         <Info className="mr-3" size={20} />
         <div>
-          <p className="font-bold">Token creation fee: 10,000,000 MEMEX</p>
+          <p className="font-bold">Token creation fee: 5,000,000 MEMEX</p>
           <p className="text-sm">Your token will be delivered to your wallet within 48 hours.</p>
         </div>
       </div>
