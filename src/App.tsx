@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
+import Header from './components/Header'; // Header bileşenini import et
 import Hero from './components/Hero';
 import Features from './components/Features';
 import TokenForm from './components/TokenForm';
@@ -9,16 +8,14 @@ import Footer from './components/Footer';
 import LegalModal from './components/LegalModal';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
-import AdminLogin from './components/AdminLogin';
-import AdminDashboard from './components/AdminDashboard';
 
-const MainLayout: React.FC = () => {
+const App: React.FC = () => {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
 
   return (
     <div>
-      <Header />
+      <Header /> {/* Header bileşenini buraya ekle */}
       <Hero />
       <Features />
       <section id="create" className="py-16 px-6 bg-gray-50">
@@ -48,18 +45,6 @@ const MainLayout: React.FC = () => {
         <TermsOfService />
       </LegalModal>
     </div>
-  );
-};
-
-const App: React.FC = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />} />
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      </Routes>
-    </Router>
   );
 };
 

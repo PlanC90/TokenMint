@@ -2,13 +2,11 @@ import React from 'react';
 import { Zap } from 'lucide-react';
 
 const Header: React.FC = () => {
-  const logoUrl = "https://cdn.glitch.global/c0240ef5-b1d3-409c-a790-588d18d5cf32/memexlogo-Photoroom.png";
-
   return (
     <header className="w-full bg-gradient-to-r from-blue-700 to-purple-600 text-white py-4 px-6 shadow-lg sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <img src={logoUrl} alt="MemeX Logo" className="h-8" />
+          <Zap size={32} className="text-yellow-400 animate-pulse" />
           <h1 className="text-xl font-extrabold sm:text-2xl tracking-tight">MemeX Token Creator</h1>
         </div>
         <nav className="hidden md:block">
