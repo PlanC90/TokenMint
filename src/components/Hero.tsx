@@ -35,7 +35,7 @@ const Hero: React.FC = () => {
                   <Coins className="text-blue-600" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg">10,000,000 MEMEX</h3>
+                  <h3 className="font-bold text-lg">5,000,000 MEMEX</h3>
                   <p className="text-gray-500 text-sm">Token Creation Fee</p>
                 </div>
               </div>

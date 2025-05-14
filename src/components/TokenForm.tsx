@@ -13,7 +13,6 @@ const TokenForm: React.FC = () => {
     walletAddress: '',
     paymentConfirmed: false,
   });
-  const [submissionSummary, setSubmissionSummary] = useState<any>(null);
 
   const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX';
 
@@ -72,7 +71,6 @@ const TokenForm: React.FC = () => {
     } else {
       console.log('Token request submitted successfully:', data);
       alert('Token creation request submitted successfully!');
-      setSubmissionSummary(formData);
       setFormData({
         tokenName: '',
         tokenSymbol: '',
@@ -109,17 +107,6 @@ const TokenForm: React.FC = () => {
           <p className="text-sm">Your token will be delivered to your wallet within 48 hours.</p>
         </div>
       </div>
-
-      {submissionSummary && (
-        <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
-          <h4 className="text-lg font-semibold text-green-800 mb-3">Submission Summary</h4>
-          <p className="text-gray-700">Token Name: {submissionSummary.tokenName}</p>
-          <p className="text-gray-700">Token Symbol: {submissionSummary.tokenSymbol}</p>
-          <p className="text-gray-700">Total Supply: {submissionSummary.totalSupply}</p>
-          <p className="text-gray-700">Token Logo URL: {submissionSummary.tokenLogoUrl}</p>
-          <p className="text-gray-700">Wallet Address: {submissionSummary.walletAddress}</p>
-        </div>
-      )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
