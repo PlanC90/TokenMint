@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Info, Copy, CheckCircle } from 'lucide-react';
 import QRCode from 'qrcode.react';
 import { supabase } from '../supabaseClient';
@@ -24,8 +24,24 @@ const TokenForm: React.FC = () => {
   });
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+  const [logoError, setLogoError] = useState<string | null>(null); // State for logo validation error
 
+  // Ref for the success message element
+  const successMessageRef = useRef<HTMLHeadingElement>(null);
+
+  // Updated payment address and fee
   const paymentAddress = 'xNLf3qAwErms2KsDC3cJ5trwwV6kX1ZXzX'; // This should be the actual payment address
+  const tokenCreationFee = '5,000,000 MemeX'; // Updated fee
+
+  // Effect to scroll to the success message when submission is successful
+  useEffect(() => {
+    if (submissionSuccessful && successMessageRef.current) {
+      successMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Note: Programmatically moving the mouse cursor is not possible in web browsers.
+      // The scrollIntoView ensures the message is visible to the user.
+    }
+  }, [submissionSuccessful]);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -33,18 +49,30 @@ const TokenForm: React.FC = () => {
       ...formData,
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
     });
+    if (name === 'tokenLogoUrl') {
+      setLogoError(null); // Clear error when input changes
+    }
   };
 
-  const handleCopyAddress = () => {
-    navigator.clipboard.writeText(paymentAddress)
-      .then(() => {
-        alert('Payment address copied to clipboard!');
-      })
-      .catch(err => {
-        console.error('Failed to copy address: ', err);
-        alert('Failed to copy address.');
-      });
+  // Simplified validation: only check if a URL is provided (optional field)
+  const validateLogoUrl = (url: string): string | null => {
+    // If a URL is provided, we assume it's valid for now.
+    // More robust URL validation could be added here if needed,
+    // but image specific validation (like size/format) is removed.
+    return null; // No validation error
   };
+
+  // Function to handle copying the payment address to clipboard
+  const handleCopyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(paymentAddress);
+      alert('Payment address copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy address: ', err);
+      alert('Failed to copy address.');
+    }
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +83,16 @@ const TokenForm: React.FC = () => {
       alert('Please confirm that you have sent the payment.');
       return;
     }
+
+    // Validate logo URL before submission (now simplified)
+    const logoValidationError = validateLogoUrl(formData.tokenLogoUrl);
+    if (logoValidationError) {
+      setLogoError(logoValidationError);
+      return; // Stop submission if validation fails
+    } else {
+      setLogoError(null); // Clear any previous error
+    }
+
 
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -98,7 +136,8 @@ const TokenForm: React.FC = () => {
       {submissionSuccessful && submittedData ? (
         <div className="text-center">
           <CheckCircle size={64} className="text-green-500 mx-auto mb-4" />
-          <h4 className="text-xl font-semibold text-gray-800 mb-4">Token Request Submitted Successfully!</h4>
+          {/* Attach the ref to the success message heading */}
+          <h4 ref={successMessageRef} className="text-xl font-semibold text-gray-800 mb-4">Token Request Submitted Successfully!</h4>
           <p className="text-gray-600 mb-6">
             Your request for token creation has been received. Your token will be delivered to your wallet within 48 hours.
           </p>
@@ -131,7 +170,7 @@ const TokenForm: React.FC = () => {
           <div className="flex items-center bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
             <Info className="mr-3" size={20} />
             <div>
-              <p className="font-bold">Token creation fee: 5,000,000 MemeX</p>
+              <p className="font-bold">Token creation fee: {tokenCreationFee}</p>
               <p className="text-sm">Your token will be delivered to your wallet within 48 hours.</p>
             </div>
           </div>
@@ -183,18 +222,21 @@ const TokenForm: React.FC = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="tokenLogoUrl" className="block text-gray-700 font-semibold mb-2">Token Logo (PNG URL)</label>
+              <label htmlFor="tokenLogoUrl" className="block text-gray-700 font-semibold mb-2">Token Logo URL (Optional)</label>
               <input
                 type="url"
                 id="tokenLogoUrl"
                 name="tokenLogoUrl"
                 value={formData.tokenLogoUrl}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${logoError ? 'border-red-500 focus:ring-red-500' : 'focus:ring-blue-500'}`}
                 placeholder="Enter logo URL (optional)"
               />
+              {logoError && (
+                <p className="mt-1 text-sm text-red-500">{logoError}</p>
+              )}
               <div className="mt-1 text-sm text-gray-500">
-                Please enter a valid image URL
+                Enter a URL for your token logo (optional).
               </div>
             </div>
 
@@ -218,7 +260,7 @@ const TokenForm: React.FC = () => {
               <p className="text-gray-700 mb-2 break-all">{paymentAddress}</p>
               <button
                 type="button"
-                onClick={handleCopyAddress}
+                onClick={handleCopyAddress} // This now calls the defined function
                 className="inline-flex items-center px-3 py-1 bg-blue-500 text-white text-sm font-semibold rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
               >
                 <Copy size={16} className="mr-1" /> Copy Address
